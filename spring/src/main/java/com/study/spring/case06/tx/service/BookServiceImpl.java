@@ -35,8 +35,9 @@ public class BookServiceImpl implements BookService {
 			// timeout = 3
 		// readOnly=true//資料庫不鎖定的方式進行存取增加效能,用於查詢方案
 		// rollbackFor 根據發生事件進行回滾
-			rollbackFor = { InsufficientAmount.class, InsufficientQuantity.class }, noRollbackFor = {
-					RuntimeException.class })
+			rollbackFor = { InsufficientAmount.class, InsufficientQuantity.class }, 
+			noRollbackFor = { RuntimeException.class })
+
 	@Override
 	public void buyOne(Integer wid, Integer bid) throws InsufficientQuantity, InsufficientAmount {
 
@@ -53,8 +54,9 @@ public class BookServiceImpl implements BookService {
 
 	}
 
-	@Transactional(// timeout = 3
-	)
+	@Transactional(
+			// timeout = 3
+			)
 	@Override
 	public void buyMany(Integer wid, Integer... bids) throws InsufficientQuantity, InsufficientAmount {
 		for (Integer bid : bids) {
