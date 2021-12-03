@@ -3,6 +3,8 @@ package com.study.spring.case06.tx.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.study.spring.case06.tx.exception.InsufficientAmount;
+import com.study.spring.case06.tx.exception.InsufficientQuantity;
 import com.study.spring.case06.tx.service.BookService;
 
 @Controller
@@ -12,14 +14,22 @@ public class BookControllerImpl implements BookController {
 
 	@Override
 	public void buyBook(Integer wid, Integer bid) {
-		bookService.buyOne(wid, bid);
-		System.out.println("buyBook ok");
+		try {
+			bookService.buyOne(wid, bid);
+			System.out.println("buyBook ok");
+		} catch (InsufficientQuantity | InsufficientAmount e) {
+			System.out.println(e);
+		}
 	}
 
 	@Override
 	public void buyBooks(Integer wid, Integer... bids) {
-		// TODO Auto-generated method stub
-
+		try {
+			bookService.buyMany(wid, bids);
+			System.out.println("buy Many Books ok");
+		} catch (InsufficientQuantity | InsufficientAmount e) {
+			System.out.println(e);
+		}
 	}
 
 }
